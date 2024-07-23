@@ -49,10 +49,10 @@ st.set_page_config(page_title="Perhitungan Beban Emisi Udara", page_icon=":facto
 st.markdown("""
 <style>
     body {
-        background-color: #f0f2f6;
+        background-color: #13D800;
     }
     .main {
-        background-color: #ffffff;
+        background-color: #000000;
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
