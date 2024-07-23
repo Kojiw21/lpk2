@@ -52,7 +52,7 @@ st.markdown("""
         background-color: #13D800;
     }
     .main {
-        background-color: #000000;
+        background-color: #6EACDA;
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
