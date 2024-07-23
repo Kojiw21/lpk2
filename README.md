@@ -1,2 +1,2 @@
 # lpk.py
-Perhitungan Isokinetik
+Perhitungan beban Emisi
