@@ -1,2 +1,2 @@
-# lpk2
-app
+# lpk.py
+Perhitungan Isokinetik
