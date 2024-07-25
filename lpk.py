@@ -141,8 +141,8 @@ elif choice == "Perhitungan Beban Emisi":
         total_beban_emisi = hitung_beban_emisi(konsentrasi_standar, debit_standar)
         total_beban_emisi_konversi = konversi_beban_emisi(total_beban_emisi, satuan_hasil)
         
-        st.write(f"### Konsentrasi standar: *{konsentrasi_standar:.2f} mg/Nm³*")
-        st.write(f"### Total beban emisi: *{total_beban_emisi_konversi:.2f} {satuan_hasil}*")
+        st.write(f"### Konsentrasi standar: *{konsentrasi_standar:.6f} mg/Nm³*")
+        st.write(f"### Total beban emisi: *{total_beban_emisi_konversi:.6f} {satuan_hasil}*")
         
         memenuhi_baku_mutu = cek_baku_mutu(konsentrasi_standar, parameter)
         if memenuhi_baku_mutu:
