@@ -127,5 +127,6 @@ elif choice == "Perhitungan Beban Emisi":
     with st.sidebar.form(key='input_form'):
         konsentrasi = st.number_input('Konsentrasi', min_value=0.0, step=0.1, help='Masukkan konsentrasi polutan dalam udara')
         satuan_konsentrasi = st.selectbox('Satuan Konsentrasi', ['µg/m³', 'mg/m³', 'ppm'], help='Pilih satuan konsentrasi')
-        debit = st.number_input('Debit', min_value=0.0, step=0.1, help='Masukkan debit aliran udara')
+        debit = st.number_input('Debit', min_value=0.0, step=0.1, 
+        help='Masukkan debit aliran udara')
         satuan_debit
