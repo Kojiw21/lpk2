@@ -25,6 +25,7 @@ def konversi_debit(debit, satuan):
 def konversi_beban_emisi(beban_emisi, satuan):
     konversi = {
         'mg/jam': beban_emisi,
+        'mg/detik': beban_emisi / 3600,
         'g/jam': beban_emisi / 1000,
         'kg/jam': beban_emisi / 1_000_000,
         'ton/tahun': beban_emisi / 1_000_000_000 * 24 * 365  # Asumsi beban emisi dalam mg/jam untuk 1 tahun
@@ -127,36 +128,4 @@ elif choice == "Perhitungan Beban Emisi":
         konsentrasi = st.number_input('Konsentrasi', min_value=0.0, step=0.1, help='Masukkan konsentrasi polutan dalam udara')
         satuan_konsentrasi = st.selectbox('Satuan Konsentrasi', ['µg/m³', 'mg/m³', 'ppm'], help='Pilih satuan konsentrasi')
         debit = st.number_input('Debit', min_value=0.0, step=0.1, help='Masukkan debit aliran udara')
-        satuan_debit = st.selectbox('Satuan Debit', ['m³/jam', 'L/detik', 'L/menit', 'm³/hari', 'm³/menit', 'm³/detik'], help='Pilih satuan debit')
-        parameter = st.selectbox('Parameter Polutan', ['PM10', 'SO2', 'NO2', 'CO'], help='Pilih parameter polutan')
-        satuan_hasil = st.selectbox('Satuan Hasil Beban Emisi', ['mg/jam', 'g/jam', 'kg/jam', 'ton/tahun'], help='Pilih satuan hasil beban emisi')
-        submit_button = st.form_submit_button(label='Hitung Beban Emisi')
-
-    st.write("## Hasil Perhitungan")
-
-    if submit_button:
-        konsentrasi_standar = konversi_konsentrasi(konsentrasi, satuan_konsentrasi)
-        debit_standar = konversi_debit(debit, satuan_debit)
-        total_beban_emisi = hitung_beban_emisi(konsentrasi_standar, debit_standar)
-        total_beban_emisi_konversi = konversi_beban_emisi(total_beban_emisi, satuan_hasil)
-        
-        st.write(f"### Konsentrasi standar: *{konsentrasi_standar:.2f} mg/Nm³*")
-        st.write(f"### Total beban emisi: *{total_beban_emisi_konversi:.2f} {satuan_hasil}*")
-        
-        memenuhi_baku_mutu = cek_baku_mutu(konsentrasi_standar, parameter)
-        if memenuhi_baku_mutu:
-            st.success(f"*Konsentrasi memenuhi baku mutu untuk parameter {parameter}.*")
-        else:
-            st.error(f"*Konsentrasi melebihi baku mutu untuk parameter {parameter}!*")
-        
-        # Simpan hasil perhitungan untuk perbandingan dengan baku mutu
-        st.session_state['konsentrasi_standar'] = konsentrasi_standar
-        st.session_state['parameter'] = parameter
-        st.session_state['beban_emisi'] = total_beban_emisi_konversi
-
-# Footer
-st.markdown("""
-    <div class="footer">
-        <p>App by Kelompok 1 - 2024</p>
-    </div>
-    """, unsafe_allow_html=True)
+        satuan_debit
