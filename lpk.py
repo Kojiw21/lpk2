@@ -15,17 +15,19 @@ def konversi_debit(debit, satuan):
         'm³/jam': debit,
         'L/detik': debit * 3.6,
         'L/menit': debit * 0.06,
-        'm³/hari': debit / 24
+        'm³/hari': debit / 24,
+        'm³/menit': debit * 60,
+        'm³/detik': debit * 3600
     }
     return konversi.get(satuan, debit)
 
-# Fungsi untuk mengkonversi satuan beban emisi
+# Fungsi untuk mengkonversi satuan beban emisi ke berat/waktu
 def konversi_beban_emisi(beban_emisi, satuan):
     konversi = {
-        'mg/Nm³': beban_emisi,
-        'g/Nm³': beban_emisi / 1000,
-        'kg/Nm³': beban_emisi / 1_000_000,
-        'ton/tahun': beban_emisi / 1_000_000_000 * 24 * 365  # Asumsi beban emisi dalam mg/Nm³ untuk 1 tahun
+        'mg/jam': beban_emisi,
+        'g/jam': beban_emisi / 1000,
+        'kg/jam': beban_emisi / 1_000_000,
+        'ton/tahun': beban_emisi / 1_000_000_000 * 24 * 365  # Asumsi beban emisi dalam mg/jam untuk 1 tahun
     }
     return konversi.get(satuan, beban_emisi)
 
@@ -49,10 +51,10 @@ st.set_page_config(page_title="Perhitungan Beban Emisi Udara", page_icon=":facto
 st.markdown("""
 <style>
     body {
-        background-color: #13D800;
+        background-color: #f0f2f6;
     }
     .main {
-        background-color: #6EACDA;
+        background-color: #ffffff;
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
@@ -100,7 +102,7 @@ if choice == "Perkenalan":
     Beban emisi udara adalah jumlah total polutan yang dilepaskan ke atmosfer dalam jangka waktu tertentu. Perhitungan ini penting untuk memastikan bahwa emisi yang dihasilkan tidak melebihi batas yang ditetapkan oleh baku mutu.
 
     ### Baku Mutu Emisi Udara
-    Berikut adalah baku mutu emisi udara yang digunakan dalam aplikasi ini:
+    Berikut adalah baku mutu emisi udara yang digunakan dalam aplikasi ini sesuai dengan *PermenLHK No. 15 Tahun 2019*:
     - PM10: 90 mg/Nm³
     - SO2: 550 mg/Nm³
     - NO2: 300 mg/Nm³
@@ -125,9 +127,9 @@ elif choice == "Perhitungan Beban Emisi":
         konsentrasi = st.number_input('Konsentrasi', min_value=0.0, step=0.1, help='Masukkan konsentrasi polutan dalam udara')
         satuan_konsentrasi = st.selectbox('Satuan Konsentrasi', ['µg/m³', 'mg/m³', 'ppm'], help='Pilih satuan konsentrasi')
         debit = st.number_input('Debit', min_value=0.0, step=0.1, help='Masukkan debit aliran udara')
-        satuan_debit = st.selectbox('Satuan Debit', ['m³/jam', 'L/detik', 'L/menit', 'm³/hari'], help='Pilih satuan debit')
+        satuan_debit = st.selectbox('Satuan Debit', ['m³/jam', 'L/detik', 'L/menit', 'm³/hari', 'm³/menit', 'm³/detik'], help='Pilih satuan debit')
         parameter = st.selectbox('Parameter Polutan', ['PM10', 'SO2', 'NO2', 'CO'], help='Pilih parameter polutan')
-        satuan_hasil = st.selectbox('Satuan Hasil Beban Emisi', ['mg/Nm³', 'g/Nm³', 'kg/Nm³', 'ton/tahun'], help='Pilih satuan hasil beban emisi')
+        satuan_hasil = st.selectbox('Satuan Hasil Beban Emisi', ['mg/jam', 'g/jam', 'kg/jam', 'ton/tahun'], help='Pilih satuan hasil beban emisi')
         submit_button = st.form_submit_button(label='Hitung Beban Emisi')
 
     st.write("## Hasil Perhitungan")
@@ -138,14 +140,14 @@ elif choice == "Perhitungan Beban Emisi":
         total_beban_emisi = hitung_beban_emisi(konsentrasi_standar, debit_standar)
         total_beban_emisi_konversi = konversi_beban_emisi(total_beban_emisi, satuan_hasil)
         
-        st.write(f"### Konsentrasi standar: **{konsentrasi_standar:.2f} mg/Nm³**")
-        st.write(f"### Total beban emisi: **{total_beban_emisi_konversi:.2f} {satuan_hasil}**")
+        st.write(f"### Konsentrasi standar: *{konsentrasi_standar:.2f} mg/Nm³*")
+        st.write(f"### Total beban emisi: *{total_beban_emisi_konversi:.2f} {satuan_hasil}*")
         
         memenuhi_baku_mutu = cek_baku_mutu(konsentrasi_standar, parameter)
         if memenuhi_baku_mutu:
-            st.success(f"**Konsentrasi memenuhi baku mutu untuk parameter {parameter}.**")
+            st.success(f"*Konsentrasi memenuhi baku mutu untuk parameter {parameter}.*")
         else:
-            st.error(f"**Konsentrasi melebihi baku mutu untuk parameter {parameter}!**")
+            st.error(f"*Konsentrasi melebihi baku mutu untuk parameter {parameter}!*")
         
         # Simpan hasil perhitungan untuk perbandingan dengan baku mutu
         st.session_state['konsentrasi_standar'] = konsentrasi_standar
