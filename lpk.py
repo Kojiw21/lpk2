@@ -74,7 +74,7 @@ st.markdown("""
         padding: 20px;
         margin-top: 20px;
         font-size: 14px;
-        color: #888;
+        color: #000000;
     }
     .sidebar .sidebar-content {
         background-color: #4CAF50;
