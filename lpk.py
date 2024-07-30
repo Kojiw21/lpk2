@@ -5,7 +5,8 @@ def konversi_konsentrasi(konsentrasi, satuan):
     konversi = {
         'µg/m³': konsentrasi / 1000,  # µg/m³ ke mg/m³
         'mg/m³': konsentrasi,
-        'ppm': konsentrasi * 1.96  # Asumsi untuk konversi kasar
+        'ppm': konsentrasi * 1.96,    # Asumsi untuk konversi kasar
+        '%': konsentrasi * 10_000     # % ke mg/m³ (1% = 10,000 mg/m³)
     }
     return konversi.get(satuan, konsentrasi)
 
@@ -52,16 +53,16 @@ st.set_page_config(page_title="Perhitungan Beban Emisi Udara", page_icon=":facto
 st.markdown("""
 <style>
     body {
-        background-color: #43EF00;
+        background-color: #f0f2f6;
     }
     .main {
-        background-color: #C5AE0F;
+        background-color: #ffffff;
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     }
     .stButton>button {
-        background-color: #262730;
+        background-color: #4CAF50;
         color: white;
         border-radius: 10px;
     }
@@ -126,7 +127,7 @@ elif choice == "Perhitungan Beban Emisi":
     # Input form untuk konsentrasi dan debit
     with st.sidebar.form(key='input_form'):
         konsentrasi = st.number_input('Konsentrasi', min_value=0.0, step=0.1, help='Masukkan konsentrasi polutan dalam udara')
-        satuan_konsentrasi = st.selectbox('Satuan Konsentrasi', ['µg/m³', 'mg/m³', 'ppm'], help='Pilih satuan konsentrasi')
+        satuan_konsentrasi = st.selectbox('Satuan Konsentrasi', ['µg/m³', 'mg/m³', 'ppm', '%'], help='Pilih satuan konsentrasi')
         debit = st.number_input('Debit', min_value=0.0, step=0.1, help='Masukkan debit aliran udara')
         satuan_debit = st.selectbox('Satuan Debit', ['m³/jam', 'L/detik', 'L/menit', 'm³/hari', 'm³/menit', 'm³/detik'], help='Pilih satuan debit')
         parameter = st.selectbox('Parameter Polutan', ['PM10', 'SO2', 'NO2', 'CO'], help='Pilih parameter polutan')
@@ -149,7 +150,8 @@ elif choice == "Perhitungan Beban Emisi":
             st.success(f"*Konsentrasi memenuhi baku mutu untuk parameter {parameter}.*")
         else:
             st.error(f"*Konsentrasi melebihi baku mutu untuk parameter {parameter}!*")
-        
+            st.info(f"*Saran perbaikan:* Pertimbangkan untuk meningkatkan efisiensi kontrol polusi, seperti penggunaan filter udara yang lebih baik atau peningkatan efisiensi proses untuk mengurangi emisi.")
+
         # Simpan hasil perhitungan untuk perbandingan dengan baku mutu
         st.session_state['konsentrasi_standar'] = konsentrasi_standar
         st.session_state['parameter'] = parameter
