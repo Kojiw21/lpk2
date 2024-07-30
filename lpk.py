@@ -67,7 +67,7 @@ st.markdown("""
         border-radius: 10px;
     }
     .stButton>button:hover {
-        background-color: #45a049;
+        background-color: #51FF4B;
     }
     .footer {
         text-align: center;
