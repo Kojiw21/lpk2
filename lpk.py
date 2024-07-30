@@ -53,7 +53,7 @@ st.set_page_config(page_title="Perhitungan Beban Emisi Udara", page_icon=":facto
 st.markdown("""
 <style>
     body {
-        background-color: #f0f2f6;
+        background-color: #51FF4B;
     }
     .main {
         background-color: #51FF4B;
